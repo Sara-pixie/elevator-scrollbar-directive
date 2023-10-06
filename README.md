@@ -42,3 +42,34 @@ on chosen HTML element add `*elevatorScrollbar` or `*elevatorScrollbarWatchHeade
  <router-outlet></router-outlet>
 </div>
 ```
+## Fixed Header
+Code for fixed header [here](https://github.com/Sara-pixie/elevator-scrollbar-directive/blob/master/src/app/components/header/header.component.ts) also [header service](https://github.com/Sara-pixie/elevator-scrollbar-directive/blob/master/src/app/services/header.service.ts)
+#### How To Use
+```
+@Component({
+  selector: 'app-base',
+  template: `
+  <app-header [headerItems]="headerItems"></app-header>
+  <div id="base-body" style="overflow-x: hidden">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
+  `,
+})
+export class BaseComponent implements OnInit, AfterViewInit {
+  headerItems: PageHeaderItems = this.headerService.getDefaultLinks();
+
+  constructor(public headerService: HeaderService) {}
+
+  ngOnInit(): void {
+    this.headerItems = this.headerService.getBasePageLinks();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.headerService.init('base-body');
+      /* will initiate hader service and lsten for header height changes to then add padding-top to 'base-body' so that header doesn't cover the top of 'base-body' contents */
+    }, 10);
+  }
+}
+```
