@@ -1,0 +1,10 @@
+<header id="menu">
+  <h1>HEADER</h1>
+  <div class="header-items">
+    <div class="header-item" [ngClass]="item.cssClass ? item.cssClass : ''"
+      *ngFor="let item of headerItems"
+      (click)="onNavigate(item)">
+        {{item.title}}
+    </div>
+  </div>
+</header>
